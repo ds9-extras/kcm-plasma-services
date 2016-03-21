@@ -1,0 +1,12 @@
+[Desktop Entry]
+Icon=preferences-system-login
+Type=Service
+Categories=Qt;KDE;X-KDE-settings-system;
+
+X-KDE-ServiceTypes=KCModule
+X-KDE-Library=kcm_plasmaservices
+X-KDE-ParentApp=kcontrol
+X-KDE-System-Settings-Parent-Category=session
+X-KDE-Keywords=startup
+Name=Plasma Services
+Comment=Plasma Services
