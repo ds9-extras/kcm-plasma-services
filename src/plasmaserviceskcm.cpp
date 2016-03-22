@@ -26,6 +26,8 @@
 #include <KLocalizedString>
 
 #include "krunnerservice.h"
+#include "akonadiservice.h"
+#include "balooservice.h"
 
 #include <kpluginfactory.h>
 #include <kpluginloader.h>
@@ -47,6 +49,8 @@ PlasmaServicesKcm::PlasmaServicesKcm(QWidget *parent, const QVariantList &args) 
     setAboutData(aboutData);
     
     m_services["krunner"] = new KRunnerService;
+    m_services["akonadi"] = new AkonadiService;
+    m_services["baloo"] = new BalooService;
 
     prepareUi();
 }
@@ -58,6 +62,14 @@ PlasmaServicesKcm::~PlasmaServicesKcm()
 
 void PlasmaServicesKcm::save()
 {
+    QHash<QString, AbstractService*>::const_iterator i = m_services.constBegin();
+    while (i != m_services.constEnd()) {
+        bool checked = m_checkboxes[i.key()]->isChecked();
+        if (i.value()->isEnabled() != checked) {
+            i.value()->setEnabled(checked);
+        }
+        i++;
+    }
 }
 
 void PlasmaServicesKcm::prepareUi()
@@ -68,11 +80,16 @@ void PlasmaServicesKcm::prepareUi()
     title->setText(i18n("Plasma Services"));
     layout->addWidget(title);
 
-    foreach(AbstractService *service, m_services.values()) {
+    QHash<QString, AbstractService*>::const_iterator i = m_services.constBegin();
+    while (i != m_services.constEnd()) {
+        AbstractService *service = i.value();
         auto checkbox = new QCheckBox(service->name());
+        m_checkboxes[i.key()] = checkbox;
+
         connect(checkbox, &QCheckBox::toggled, this, [this](){changed();});
         checkbox->setChecked(service->isEnabled());
         layout->addWidget(checkbox);
+        i++;
     }
     layout->addStretch();
 
