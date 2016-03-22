@@ -1,4 +1,5 @@
 set(SERVICES
+    akonadiservice.cpp
     balooservice.cpp
     krunnerservice.cpp
     )

@@ -3,10 +3,11 @@
 
 #include "krunnerservice.h"
 #include "balooservice.h"
+#include "akonadiservice.h"
 
 int main()
 {
-    BalooService r;
+    AkonadiService r;
     qDebug() << r.isEnabled();
-    r.setEnabled(true);
+    r.setEnabled(false);
 }
