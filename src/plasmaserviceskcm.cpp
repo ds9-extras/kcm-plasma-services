@@ -27,7 +27,7 @@
 #include <KPluginFactory>
 #include <KLocalizedString>
 
-#include "abstractservice.h"
+#include "krunnerservice.h"
 
 #include <kpluginfactory.h>
 #include <kpluginloader.h>
@@ -48,11 +48,14 @@ PlasmaServicesKcm::PlasmaServicesKcm(QWidget *parent, const QVariantList &args) 
 
     setAboutData(aboutData);
     
+    m_services["krunner"] = new KRunnerService;
+
     prepareUi();
 }
 
 PlasmaServicesKcm::~PlasmaServicesKcm()
 {
+    qDeleteAll(m_services);
 }
 
 /*
