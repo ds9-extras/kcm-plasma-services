@@ -118,6 +118,7 @@ void PlasmaServicesKcm::prepareUi()
 
     foreach(AbstractService *service, m_services.values()) {
         auto checkbox = new QCheckBox(service->name());
+        connect(checkbox, &QCheckBox::toggled, this, [this](){changed();});
         checkbox->setChecked(service->isEnabled());
         layout->addWidget(checkbox);
     }
