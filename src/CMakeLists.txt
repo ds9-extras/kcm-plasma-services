@@ -1,6 +1,14 @@
+set(SERVICES
+    krunnerservice.cpp
+    )
+
 set(PLASMA_SERVICES_KCM
     plasmaserviceskcm.cpp
+    ${SERVICES}
 )
+
+add_executable(plasma_services_test test.cpp ${SERVICES})
+
 #
 # set(SDDM_KCM_UI
 #     ui/themeconfig.ui
@@ -16,6 +24,13 @@ target_link_libraries(kcm_plasmaservices
     KF5::ConfigWidgets
     KF5::KIOWidgets
 )
+target_link_libraries(plasma_services_test
+    Qt5::Widgets
+    KF5::I18n
+    KF5::ConfigWidgets
+    KF5::KIOWidgets
+)
+
 install(TARGETS kcm_plasmaservices DESTINATION ${CMAKE_INSTALL_PLUGINDIR})
 
 
