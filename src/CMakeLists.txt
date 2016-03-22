@@ -1,4 +1,5 @@
 set(SERVICES
+    balooservice.cpp
     krunnerservice.cpp
     )
 
@@ -20,15 +21,19 @@ target_compile_definitions(kcm_plasmaservices PRIVATE -DPROJECT_VERSION="${PROJE
 
 target_link_libraries(kcm_plasmaservices
     Qt5::Widgets
+    Qt5::DBus
     KF5::I18n
     KF5::ConfigWidgets
     KF5::KIOWidgets
+    KF5::Baloo
 )
 target_link_libraries(plasma_services_test
     Qt5::Widgets
+    Qt5::DBus
     KF5::I18n
     KF5::ConfigWidgets
     KF5::KIOWidgets
+    KF5::Baloo
 )
 
 install(TARGETS kcm_plasmaservices DESTINATION ${CMAKE_INSTALL_PLUGINDIR})

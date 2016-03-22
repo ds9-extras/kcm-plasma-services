@@ -2,13 +2,11 @@
 #include <QDebug>
 
 #include "krunnerservice.h"
+#include "balooservice.h"
 
 int main()
 {
-    KRunnerService r;
-    qDebug() << r.isEnabled();
-    r.setEnabled(false);
+    BalooService r;
     qDebug() << r.isEnabled();
     r.setEnabled(true);
-    qDebug() << r.isEnabled();
 }

@@ -10,7 +10,7 @@ include(KDECMakeSettings)
 include(KDECompilerSettings)
 include(FeatureSummary)
 
-find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Core Widgets)
+find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Core Widgets DBus)
 
 find_package(KF5 REQUIRED COMPONENTS
     CoreAddons
@@ -18,6 +18,7 @@ find_package(KF5 REQUIRED COMPONENTS
     XmlGui
     ConfigWidgets
     KIO
+    Baloo
 )
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kcm_plasmaservices\")
