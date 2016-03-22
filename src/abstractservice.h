@@ -22,6 +22,8 @@
 class AbstractService
 {
     public:
+        AbstractService() = default;
+        virtual ~AbstractService() = default;
         virtual QString name() const = 0;
 
         virtual bool isEnabled() const = 0;
