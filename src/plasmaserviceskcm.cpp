@@ -56,20 +56,6 @@ PlasmaServicesKcm::~PlasmaServicesKcm()
     qDeleteAll(m_services);
 }
 
-
-// #2 Then add these lines (if they don't exist, else make necessary changes in them) to ~/.config/akonadi/akonadiserverrc
-//
-// [QMYSQL]
-// Name=akonadi
-// Host=
-// User=
-// Password=
-// Options="UNIX_SOCKET=/home/manmath/.local/share/akonadi/db_misc/mysql.socket"
-// ServerPath=/usr/sbin/mysqld-akonadi
-// StartServer=false
-
-
-
 void PlasmaServicesKcm::save()
 {
 }
