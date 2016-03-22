@@ -20,8 +20,6 @@
 #include <QCheckBox>
 #include <QDebug>
 
-
-
 #include <KAboutData>
 #include <KTitleWidget>
 #include <KPluginFactory>
@@ -58,38 +56,6 @@ PlasmaServicesKcm::~PlasmaServicesKcm()
     qDeleteAll(m_services);
 }
 
-/*
- *     bool enabled = m_enableCheckbox->isChecked();
-    if (mountPointsEx)
-        enabled = false;
-
-    Baloo::IndexerConfig config;
-    config.setFileIndexingEnabled(enabled);
-    config.setIncludeFolders(includeFolders);
-    config.setExcludeFolders(excludeFolders);
-
-    if (m_previouslyEnabled != enabled) {
-        config.setFirstRun(true);
-    }
-
-    // Start Baloo
-    if (enabled) {
-        const QString exe = QStandardPaths::findExecutable(QStringLiteral("baloo_file"));
-        QProcess::startDetached(exe);
-    }
-    else {
-        QDBusMessage message = QDBusMessage::createMethodCall(QStringLiteral("org.kde.baloo"),
-                                                              QStringLiteral("/"),
-                                                              QStringLiteral("org.kde.baloo.main"),
-                                                              QStringLiteral("quit"));
-
-        QDBusConnection::sessionBus().asyncCall(message);
-    }
-
-    // Start cleaner
-    const QString exe = QStandardPaths::findExecutable(QStringLiteral("baloo_file_cleaner"));
-    QProcess::startDetached(exe);
-    **/
 
 // #2 Then add these lines (if they don't exist, else make necessary changes in them) to ~/.config/akonadi/akonadiserverrc
 //
