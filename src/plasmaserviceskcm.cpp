@@ -154,7 +154,7 @@ PlasmaServicesKcm::~PlasmaServicesKcm()
 
 void PlasmaServicesKcm::save()
 {
-    QHash<QString, AbstractService*>::const_iterator i = m_services.constBegin();
+    QMap<QString, AbstractService*>::const_iterator i = m_services.constBegin();
     while (i != m_services.constEnd()) {
         bool checked = m_checkboxes[i.key()]->isChecked();
         if (i.value()->isEnabled() != checked) {
@@ -168,7 +168,7 @@ void PlasmaServicesKcm::prepareUi()
 {
     auto layout = new QVBoxLayout;
 
-    QHash<QString, AbstractService*>::const_iterator i = m_services.constBegin();
+    QMap<QString, AbstractService*>::const_iterator i = m_services.constBegin();
     while (i != m_services.constEnd()) {
         AbstractService *service = i.value();
         auto checkbox = new ToggleButton(service->name());

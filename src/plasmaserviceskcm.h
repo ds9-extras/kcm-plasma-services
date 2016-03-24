@@ -35,7 +35,7 @@ public slots:
 private:
     void prepareUi();
 
-    QHash<QString, AbstractService *> m_services;
+    QMap<QString, AbstractService *> m_services;
     QHash<QString, QAbstractButton *> m_checkboxes;
 
 };
