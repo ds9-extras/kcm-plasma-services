@@ -20,7 +20,7 @@
 #include <KCModule>
 
 class AbstractService;
-class QCheckBox;
+class QAbstractButton;
 
 class PlasmaServicesKcm : public KCModule
 {
@@ -36,7 +36,7 @@ private:
     void prepareUi();
 
     QHash<QString, AbstractService *> m_services;
-    QHash<QString, QCheckBox *> m_checkboxes;
+    QHash<QString, QAbstractButton *> m_checkboxes;
 
 };
 

@@ -34,6 +34,96 @@
 K_PLUGIN_FACTORY(PlasmaServicesKcmFactory, registerPlugin<PlasmaServicesKcm>();)
 K_EXPORT_PLUGIN(PlasmaServicesKcmFactory("kcm_plasmaservices"))
 
+#include <QPushButton>
+#include <QStylePainter>
+#include <QStyleOptionButton>
+#include <QPainter>
+#include <QPaintEvent>
+#include <QEvent>
+
+class ToggleButton : public QAbstractButton
+{
+public:
+    ToggleButton(const QString &text, QWidget *parent = 0);
+    virtual ~ToggleButton();
+    void paintEvent(QPaintEvent *e) override;
+    QSize sizeHint() const override;
+protected:
+    bool event(QEvent *event) override;
+private:
+    void initStyle();
+    int m_toggleButtonWidth;
+};
+
+ToggleButton::ToggleButton(const QString &text, QWidget *parent):
+    QAbstractButton(parent)
+{
+    setText(text);
+    setCheckable(true);
+    initStyle();
+}
+
+ToggleButton::~ToggleButton()
+{
+}
+
+void ToggleButton::paintEvent(QPaintEvent* e)
+{
+    QStylePainter p(this);
+
+
+    const int switchWidth = m_toggleButtonWidth * 2;
+    const int switchOffset = width() - switchWidth;
+
+    QStyleOptionButton o;
+    o.initFrom(this);
+    o.rect = QRect(switchOffset, 0, switchWidth, height());
+    o.features = QStyleOptionButton::None;
+    o.text = text();
+    o.rect = rect().adjusted(0,0,-switchWidth, 0);
+    p.drawControl(QStyle::CE_CheckBoxLabel, o);
+
+    o.rect = QRect(switchOffset, 0, switchWidth, height());
+    p.drawControl(QStyle::CE_ProgressBarGroove, o);
+
+    QRect offArea = QRect(switchOffset, 0, m_toggleButtonWidth, height());
+    QRect onArea = QRect(switchOffset + m_toggleButtonWidth, 0, m_toggleButtonWidth, height());
+
+    o.rect = isChecked() ? onArea : offArea;
+    p.drawControl(QStyle::CE_PushButtonBevel, o);
+
+    if (isChecked()) {
+        p.drawItemText(offArea, Qt::AlignCenter, palette(), true, i18n("On"));
+    } else {
+        p.drawItemText(onArea, Qt::AlignCenter, palette(), false, i18n("Off"));
+    }
+}
+
+QSize ToggleButton::sizeHint() const
+{
+    QFontMetrics fm = fontMetrics();
+
+    QStyleOptionButton opt;
+    opt.initFrom(this);
+    const QSize buttonSize(style()->sizeFromContents(QStyle::CT_PushButton, &opt, QSize(m_toggleButtonWidth * 2, fm.height()), this));
+    return QSize(buttonSize.width() + fm.width(text()), buttonSize.height());
+}
+
+bool ToggleButton::event(QEvent* event)
+{
+    if (event->type() == QEvent::FontChange ||
+        event->type() == QEvent::StyleChange)
+    {
+        initStyle();
+    }
+    return QAbstractButton::event(event);
+}
+
+void ToggleButton::initStyle()
+{
+    QFontMetrics fm = fontMetrics();
+    m_toggleButtonWidth = qMax(fm.width(i18n("On")), fm.width(i18n("Off"))) + style()->pixelMetric(QStyle::PM_ButtonMargin) * 4;
+}
 
 PlasmaServicesKcm::PlasmaServicesKcm(QWidget *parent, const QVariantList &args) :
     KCModule(parent, args)
@@ -76,17 +166,13 @@ void PlasmaServicesKcm::prepareUi()
 {
     auto layout = new QVBoxLayout;
 
-    auto title = new KTitleWidget(this);
-    title->setText(i18n("Plasma Services"));
-    layout->addWidget(title);
-
     QHash<QString, AbstractService*>::const_iterator i = m_services.constBegin();
     while (i != m_services.constEnd()) {
         AbstractService *service = i.value();
-        auto checkbox = new QCheckBox(service->name());
+        auto checkbox = new ToggleButton(service->name());
         m_checkboxes[i.key()] = checkbox;
 
-        connect(checkbox, &QCheckBox::toggled, this, [this](){changed();});
+        connect(checkbox, &QAbstractButton::toggled, this, [this](){changed();});
         checkbox->setChecked(service->isEnabled());
         layout->addWidget(checkbox);
         i++;
