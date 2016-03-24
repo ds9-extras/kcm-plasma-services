@@ -21,7 +21,7 @@ bool KWalletService::isEnabled() const
 {
     KConfig config("kwalletrc");
     KConfigGroup group = config.group("Wallet");
-    group.readEntry("Enabled", true);
+    return group.readEntry("Enabled", true);
 }
 
 bool KWalletService::setEnabled(bool enabled)
