@@ -2,6 +2,7 @@ set(SERVICES
     akonadiservice.cpp
     balooservice.cpp
     krunnerservice.cpp
+    kwalletservice.cpp
     )
 
 set(PLASMA_SERVICES_KCM

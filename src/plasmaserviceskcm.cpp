@@ -28,6 +28,7 @@
 #include "krunnerservice.h"
 #include "akonadiservice.h"
 #include "balooservice.h"
+#include "kwalletservice.h"
 
 #include <kpluginfactory.h>
 #include <kpluginloader.h>
@@ -141,6 +142,7 @@ PlasmaServicesKcm::PlasmaServicesKcm(QWidget *parent, const QVariantList &args) 
     m_services["krunner"] = new KRunnerService;
     m_services["akonadi"] = new AkonadiService;
     m_services["baloo"] = new BalooService;
+    m_services["kwallet"] = new KWalletService;
 
     prepareUi();
 }
