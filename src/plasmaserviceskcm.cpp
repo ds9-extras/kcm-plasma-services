@@ -72,29 +72,42 @@ void ToggleButton::paintEvent(QPaintEvent* e)
 {
     QStylePainter p(this);
 
-
     const int switchWidth = m_toggleButtonWidth * 2;
     const int switchOffset = width() - switchWidth;
-
-    QStyleOptionButton o;
-    o.initFrom(this);
-    o.rect = QRect(switchOffset, 0, switchWidth, height());
-    o.features = QStyleOptionButton::None;
-    o.text = text();
-    o.rect = rect().adjusted(0,0,-switchWidth, 0);
-    p.drawControl(QStyle::CE_CheckBoxLabel, o);
-
-    o.rect = QRect(switchOffset, 0, switchWidth, height());
-    p.drawControl(QStyle::CE_ProgressBarGroove, o);
 
     QRect offArea = QRect(switchOffset, 0, m_toggleButtonWidth, height());
     QRect onArea = QRect(switchOffset + m_toggleButtonWidth, 0, m_toggleButtonWidth, height());
 
-    o.rect = isChecked() ? onArea : offArea;
-    p.drawControl(QStyle::CE_PushButtonBevel, o);
+    QStyleOptionProgressBar o;
+    QStyleOptionButton o2;
+    o2.rect = rect().adjusted(0,0,-switchWidth, 0);
+    o2.initFrom(this);
+    o2.features = QStyleOptionButton::None;
+    o2.text = text();
+
+    o.initFrom(this);
+    o.minimum = 0;
+    o.maximum = 1;
+    o.progress = 1;
+    o.textVisible = false;
+    p.drawControl(QStyle::CE_CheckBoxLabel, o2);
+
+    o.rect = QRect(switchOffset, 0, switchWidth, height());
+    p.drawControl(QStyle::CE_ProgressBarGroove, o);
 
     if (isChecked()) {
-        p.drawItemText(offArea, Qt::AlignCenter, palette(), true, i18n("On"));
+        p.drawControl(QStyle::CE_ProgressBarContents, o);
+    }
+
+    o2.rect = isChecked() ? onArea : offArea;
+    p.drawControl(QStyle::CE_PushButtonBevel, o2);
+
+
+    if (isChecked()) {
+        o.rect = offArea;
+        o.text=i18n("On");
+        p.drawControl(QStyle::CE_ProgressBarLabel, o);
+//         p.drawItemText(offArea, Qt::AlignCenter, palette(), true, i18n("On"));
     } else {
         p.drawItemText(onArea, Qt::AlignCenter, palette(), false, i18n("Off"));
     }
