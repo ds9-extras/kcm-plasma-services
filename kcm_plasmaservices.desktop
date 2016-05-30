@@ -9,4 +9,6 @@ X-KDE-ParentApp=kcontrol
 X-KDE-System-Settings-Parent-Category=session
 X-KDE-Keywords=startup
 Name=Plasma Services
-Comment=Plasma Services
+Name[de]=Plasma Dienste
+Comment=Manage the main plasma services
+Comment[de]=Konfiguration der wichtigsten Plasma Dienste
