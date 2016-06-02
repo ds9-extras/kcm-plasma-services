@@ -8,6 +8,7 @@ X-KDE-Library=kcm_plasmaservices
 X-KDE-ParentApp=kcontrol
 X-KDE-System-Settings-Parent-Category=advanced
 X-KDE-Keywords=startup,service,services,plasma
+X-KDE-Weight=20
 Name=Plasma Services
 Name[de]=Plasma Dienste
 Comment=Manage the main plasma services
